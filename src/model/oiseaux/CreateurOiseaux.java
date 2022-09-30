@@ -10,14 +10,15 @@ public class CreateurOiseaux {
 
     public Oiseau creer(String nom, String color, String type) throws TypeException {
 
+        String colorUpper = color.toUpperCase();
         switch (type.toUpperCase()){
 
             case "PERROQUET" -> {
-                return new Perroquet(nom, Color.valueOf(color));
+                return new Perroquet(nom, Color.valueOf(colorUpper));
             }
 
             case "PIGEON" -> {
-                return new Pigeon(nom, Color.valueOf(color));
+                return new Pigeon(nom, Color.valueOf(colorUpper));
             }
 
         }

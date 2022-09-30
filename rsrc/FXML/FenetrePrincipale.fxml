@@ -6,22 +6,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:id="root" alignment="CENTER">
-    <VBox alignment="CENTER">
-        <HBox alignment="CENTER">
-            <Label text="nom : "/>
-            <TextField fx:id="nomOiseau"/>
-        </HBox>
-        <HBox alignment="CENTER">
-            <Label text="couleur : "/>
-            <TextField fx:id="couleurOiseau"/>
-        </HBox>
-        <HBox alignment="CENTER">
-            <Label text="type : "/>
-            <TextField fx:id="typeOiseau"/>
-        </HBox>
-        <Button text="ajouter" onAction="#creer"/>
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
+    <VBox fx:id="root" alignment="CENTER">
+        <VBox alignment="CENTER">
+            <Label fx:id="error"/>
+            <HBox alignment="CENTER">
+                <Label text="nom : "/>
+                <TextField fx:id="nomOiseau"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label text="couleur : "/>
+                <TextField fx:id="couleurOiseau"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label text="type : "/>
+                <TextField fx:id="typeOiseau"/>
+            </HBox>
+            <Button text="ajouter" onAction="#creer"/>
+            <Button text="avancerTemps" onAction="#avancer"/>
+        </VBox>
+        <ListView fx:id="listView"/>
     </VBox>
-</VBox>
+    <VBox fx:id="detail" alignment="CENTER">
+        <Label text="nom : "/>
+        <Label fx:id="nomDetail"/>
+        <Label text="couleur : "/>
+        <Label fx:id="couleurDetail"/>
+        <Label text="type : "/>
+        <Label fx:id="typeDetail"/>
+        <Button fx:id="fermerDetail"/>
+    </VBox>
+</StackPane>
