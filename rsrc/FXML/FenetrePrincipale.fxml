@@ -25,15 +25,16 @@
             <Button text="ajouter" onAction="#creer"/>
             <Button text="avancerTemps" onAction="#avancer"/>
         </VBox>
-        <ListView fx:id="listView"/>
-    </VBox>
-    <VBox fx:id="detail" alignment="CENTER">
-        <Label text="nom : "/>
-        <Label fx:id="nomDetail"/>
-        <Label text="couleur : "/>
-        <Label fx:id="couleurDetail"/>
-        <Label text="type : "/>
-        <Label fx:id="typeDetail"/>
-        <Button fx:id="fermerDetail"/>
+        <HBox fx:id="myHBox">
+            <ListView fx:id="listView"/>
+            <VBox fx:id="detail" alignment="CENTER">
+                <Label text="nom : "/>
+                <Label fx:id="nomDetail"/>
+                <Label text="couleur : "/>
+                <Label fx:id="couleurDetail"/>
+                <Label text="type : "/>
+                <Label fx:id="typeDetail"/>
+            </VBox>
+        </HBox>
     </VBox>
 </StackPane>

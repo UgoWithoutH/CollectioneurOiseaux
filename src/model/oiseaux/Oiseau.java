@@ -1,5 +1,7 @@
 package model.oiseaux;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Color;
@@ -16,20 +18,24 @@ public abstract class Oiseau {
         public String getStyleCell() {return styleCell.get();}
         public StringProperty styleCellProperty() {return styleCell;}
         public void setStyleCell(String styleCell) {this.styleCell.set(styleCell);}
-    private Color couleur;
+    private ObjectProperty<Color> couleur = new SimpleObjectProperty();
+        public Color getCouleur() {return couleur.get();}
+        public ObjectProperty<Color> couleurProperty() {return couleur;}
+        public void setCouleur(Color couleur) {this.couleur.set(couleur);}
+    private StringProperty type = new SimpleStringProperty();
+        public String getType() {return type.get();}
+        public StringProperty typeProperty() {return type;}
+        public void setType(String type) {this.type.set(type);}
     private LocalDate dateDernierRepas;
     private int daysBeforeEat;
     private boolean affame = false;
 
     public Oiseau(String nom, Color couleur, int daysBeforeEat) {
         setNom(nom);
-        this.couleur = couleur;
+        setCouleur(couleur);
+        setType(getClass().getSimpleName());
         this.dateDernierRepas = LocalDate.now();
         this.daysBeforeEat = daysBeforeEat;
-    }
-
-    public Color getCouleur() {
-        return couleur;
     }
 
     public LocalDate getDateDernierRepas() {

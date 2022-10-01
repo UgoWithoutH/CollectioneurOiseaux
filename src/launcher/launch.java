@@ -19,7 +19,7 @@ public class launch extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setWidth(800);
-        primaryStage.setHeight(800);
+        primaryStage.setHeight(650);
 
         primaryStage.show();
     }
