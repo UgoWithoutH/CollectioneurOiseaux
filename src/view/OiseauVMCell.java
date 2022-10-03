@@ -6,21 +6,27 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import model.oiseaux.Oiseau;
+import viewmodel.OiseauVM;
 
 import java.time.LocalDate;
 
-public class OiseauCell extends ListCell<Oiseau> {
+public class OiseauVMCell extends ListCell<OiseauVM> {
 
     @Override
-    protected void updateItem(Oiseau item, boolean empty) {
+    protected void updateItem(OiseauVM item, boolean empty) {
         super.updateItem(item, empty);
         Label label = new Label();
         HBox hBox = createInnerCell(item, label);
         if(!empty){
             setGraphic(hBox);
             label.textProperty().bind(item.nomProperty());
-            styleProperty().bind(item.styleCellProperty());
+            item.affameProperty().addListener((obs, oldVal, newVal) -> {
+                if(newVal){
+                    setStyle("-fx-background-color: red");
+                }else{
+                    setStyle("");
+                }
+            });
         }else{
             label.textProperty().unbind();
             styleProperty().unbind();
@@ -30,7 +36,7 @@ public class OiseauCell extends ListCell<Oiseau> {
         }
     }
 
-    private HBox createInnerCell(Oiseau item, Label label) {
+    private HBox createInnerCell(OiseauVM item, Label label) {
         HBox hBox = new HBox();
         Pane pane = new Pane();
         Button button = new Button("nourrir");

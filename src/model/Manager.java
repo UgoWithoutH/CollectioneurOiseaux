@@ -9,20 +9,20 @@ import model.oiseaux.Oiseau;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Manager {
 
     private static final int NUMBER_DAYS_TO_INC = 7;
     private LocalDate currentDate = LocalDate.now();
-    private ObservableList<Oiseau> oiseauxObservable = FXCollections.observableArrayList();
-    private ListProperty oiseaux = new SimpleListProperty(oiseauxObservable);
-        public Object getOiseaux() {return oiseaux.get();}
-        public ListProperty oiseauxProperty() {return oiseaux;}
-        public void setOiseaux(Object oiseaux) {this.oiseaux.set(oiseaux);}
-
+    private List<Oiseau> oiseaux = new ArrayList<>();
     private CreateurOiseaux createurOiseaux = new CreateurOiseaux();
     private VerifieurDernierRepas verifieurDernierRepas = new VerifieurDernierRepas();
+
+    public List<Oiseau> getOiseaux() {
+        return Collections.unmodifiableList(oiseaux);
+    }
 
     public void avancerDate(){
         currentDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDayOfMonth()).plusDays(NUMBER_DAYS_TO_INC);
@@ -33,7 +33,7 @@ public class Manager {
         try {
             Oiseau oiseau = createurOiseaux.creer(nom, color, type);
             if(!oiseaux.contains(oiseau)) {
-                oiseauxObservable.add(oiseau);
+                oiseaux.add(oiseau);
                 return true;
             }
             else{

@@ -6,36 +6,51 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Color;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.security.PublicKey;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class Oiseau {
-    private StringProperty nom = new SimpleStringProperty();
-        public String getNom() {return nom.get();}
-        public StringProperty nomProperty() {return nom;}
-        public void setNom(String nom) {this.nom.set(nom);}
-    private StringProperty styleCell = new SimpleStringProperty();
-        public String getStyleCell() {return styleCell.get();}
-        public StringProperty styleCellProperty() {return styleCell;}
-        public void setStyleCell(String styleCell) {this.styleCell.set(styleCell);}
-    private ObjectProperty<Color> couleur = new SimpleObjectProperty();
-        public Color getCouleur() {return couleur.get();}
-        public ObjectProperty<Color> couleurProperty() {return couleur;}
-        public void setCouleur(Color couleur) {this.couleur.set(couleur);}
-    private StringProperty type = new SimpleStringProperty();
-        public String getType() {return type.get();}
-        public StringProperty typeProperty() {return type;}
-        public void setType(String type) {this.type.set(type);}
+    public static final String PROP_NOM = "PROP_NOM";
+    public static final String PROP_AFFAME = "PROP_AFFAME";
+    private PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private String nom;
+    private Color couleur;
+    private String type;
     private LocalDate dateDernierRepas;
     private int daysBeforeEat;
     private boolean affame = false;
 
     public Oiseau(String nom, Color couleur, int daysBeforeEat) {
-        setNom(nom);
-        setCouleur(couleur);
-        setType(getClass().getSimpleName());
+        this.nom = nom;
+        this.couleur = couleur;
+        this.type = getClass().getSimpleName();
         this.dateDernierRepas = LocalDate.now();
         this.daysBeforeEat = daysBeforeEat;
+    }
+
+    public void ajouterListener(PropertyChangeListener listener){
+        support.addPropertyChangeListener(listener);
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        String old = this.nom;
+        this.nom = nom;
+        support.firePropertyChange(PROP_NOM, old, nom);
+    }
+
+    public Color getCouleur() {
+        return couleur;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public LocalDate getDateDernierRepas() {
@@ -55,13 +70,9 @@ public abstract class Oiseau {
     }
 
     public void setAffame(boolean affame) {
+        boolean old = this.affame;
         this.affame = affame;
-        if(affame){
-            setStyleCell("-fx-background-color: red");
-        }
-        else{
-            setStyleCell("");
-        }
+        support.firePropertyChange(PROP_AFFAME, old, affame);
     }
 
     public void manger(LocalDate date){
@@ -74,7 +85,7 @@ public abstract class Oiseau {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Oiseau oiseau = (Oiseau) o;
-        return Objects.equals(nom.get(), oiseau.nom.get());
+        return Objects.equals(nom, oiseau.nom);
     }
 
     @Override

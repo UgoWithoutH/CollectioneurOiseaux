@@ -1,7 +1,5 @@
 package view;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -12,8 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Manager;
 import model.oiseaux.Oiseau;
+import viewmodel.ManagerVM;
+import viewmodel.OiseauVM;
 
 public class FenetrePrincipale {
 
@@ -26,13 +25,13 @@ public class FenetrePrincipale {
     @FXML
     private TextField typeOiseau;
     @FXML
-    private ListView<Oiseau> listView;
+    private ListView<OiseauVM> listViewOiseauVM;
     @FXML
     private Label error;
     @FXML
     private VBox detail;
     @FXML
-    private Label nomDetail;
+    private TextField nomDetail;
     @FXML
     private Label couleurDetail;
     @FXML
@@ -41,20 +40,20 @@ public class FenetrePrincipale {
     private HBox myHBox;
     @FXML
     private Button fermerDetail;
-    private Oiseau oiseauSelectionne;
+    private OiseauVM oiseauSelectionne;
     private Stage stage;
-    private Manager manager;
+    private ManagerVM managerVM;
 
     public FenetrePrincipale(Stage stage) {
         this.stage = stage;
-        manager = new Manager();
+        managerVM = new ManagerVM();
     }
 
     public void initialize(){
         root.prefWidthProperty().bind(stage.widthProperty());
         root.prefHeightProperty().bind(stage.heightProperty());
         myHBox.prefWidthProperty().bind(stage.widthProperty());
-        HBox.setHgrow(listView,Priority.ALWAYS);
+        HBox.setHgrow(listViewOiseauVM,Priority.ALWAYS);
         stage.widthProperty().addListener((obs, oldV, newV) -> {
             detail.setPrefWidth(newV.doubleValue() * 0.35);
         });
@@ -65,9 +64,9 @@ public class FenetrePrincipale {
     }
 
     private void initializeListView() {
-        listView.itemsProperty().bind(manager.oiseauxProperty());
-        listView.setCellFactory(__ -> new OiseauCell());
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        listViewOiseauVM.itemsProperty().bind(managerVM.oiseauxProperty());
+        listViewOiseauVM.setCellFactory(__ -> new OiseauVMCell());
+        listViewOiseauVM.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if(newVal != null) {
                 oiseauSelectionne = newVal;
             }
@@ -87,7 +86,7 @@ public class FenetrePrincipale {
 
     @FXML
     private void creer(){
-        boolean res = manager.creerOiseau(nomOiseau.getText(), couleurOiseau.getText(), typeOiseau.getText());
+        boolean res = managerVM.creerOiseau(nomOiseau.getText(), couleurOiseau.getText(), typeOiseau.getText());
         if(!res){
             setError("ERREUR OISEAU DEJA EXISTANT");
         }
@@ -98,7 +97,7 @@ public class FenetrePrincipale {
 
     @FXML
     private void avancer(){
-        manager.avancerDate();
+        managerVM.avancerDate();
         setError("");
     }
 

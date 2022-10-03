@@ -26,10 +26,10 @@
             <Button text="avancerTemps" onAction="#avancer"/>
         </VBox>
         <HBox fx:id="myHBox">
-            <ListView fx:id="listView"/>
+            <ListView fx:id="listViewOiseauVM"/>
             <VBox fx:id="detail" alignment="CENTER">
                 <Label text="nom : "/>
-                <Label fx:id="nomDetail"/>
+                <TextField fx:id="nomDetail"/>
                 <Label text="couleur : "/>
                 <Label fx:id="couleurDetail"/>
                 <Label text="type : "/>
