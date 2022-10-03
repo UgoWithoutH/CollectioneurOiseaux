@@ -34,6 +34,8 @@ public class OiseauVM implements PropertyChangeListener {
         setCouleur(model.getCouleur());
         setType(model.getType());
         setAffame(model.isAffame());
+
+        nom.addListener((obs, oldV, newV) -> model.setNom(newV));
     }
 
     public void manger(LocalDate date){
